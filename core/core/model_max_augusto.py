@@ -7,3 +7,4 @@ class MaxAugusto(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+    #update
