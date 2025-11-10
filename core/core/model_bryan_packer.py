@@ -1,6 +1,7 @@
 """
-Módulo para o modelo BryanPacker.
-Este módulo contém a definição do modelo de dados BryanPacker.
+Module for the BryanPacker model.
+
+This module contains the BryanPacker data model definition.
 """
 from datetime import datetime
 
@@ -11,13 +12,13 @@ from core.core.DATABASE.base_class import Base
 
 class BryanPacker(Base):
     """
-    Modelo de dados para a tabela bryan_packer.
+    Data model for the bryan_packer table.
     
     Attributes:
-        id (int): Identificador único do registro.
-        created_at (datetime): Data e hora de criação do registro.
+        id (int): Unique identifier for the record.
+        created_at (datetime): Timestamp when the record was created.
     """
-
+    
     __tablename__ = "bryan_packer"
 
     id = Column(Integer, primary_key=True, index=True)
