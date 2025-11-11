@@ -20,5 +20,3 @@ class PedroZanella(Base):
     nome = Column(String(100))
     cep = Column(String(9))
     rua = Column(String(200))
-
-    
