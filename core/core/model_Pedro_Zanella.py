@@ -10,7 +10,7 @@ class MariaSilva(Base):
 
 from sqlalchemy import Column, String
 
-class MariaSilva(Base):
+class PedroZanella(Base):
     __tablename__ = "pedro_zanella"
 
     id = Column(Integer, primary_key=True, index=True)
