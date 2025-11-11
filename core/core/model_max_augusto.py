@@ -8,7 +8,7 @@ class MaxAugusto(Base):
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
-    # Novas propriedades
+    # Novas propriedades atualizadas
     nome = Column(String(100))
     cep = Column(String(9))
     rua = Column(String(200))
