@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy import Column, Integer, DateTime, String, Date, Time
 from core.core.DATABASE.base_class import Base  
 
 class Joinville(Base):
@@ -7,7 +7,7 @@ class Joinville(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
-
+    type = Column(String(50), nullable=False)
 
 
 class Horario(Base):
