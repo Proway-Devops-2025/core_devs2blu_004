@@ -1,55 +1,70 @@
 # dummy_data.py
-from typing import Dict, Iterator, List
+from typing import Dict, List
 import random
 import uuid
 import datetime
 
+
 class DummyDataGenerator:
     """
-    Gera registros sintéticos tipo usuário/ordem para testes.
-    Uso: gen = DummyDataGenerator(); next(gen.users(5))
+    Gera registros sintéticos tipo usuário e pedido para testes.
+    Uso:
+        gen = DummyDataGenerator()
+        gen.users(5)
+        gen.orders(10)
     """
+
     FIRST_NAMES = ["Ana", "Bruno", "Carlos", "Beatriz", "Diego"]
     LAST_NAMES = ["Silva", "Pereira", "Oliveira", "Souza", "Alves"]
     PRODUCTS = ["camiseta", "caneca", "livro", "fone", "mochila"]
 
-    def random_user(self) -> Dict:
-        uid = str(uuid.uuid4())
+    def generate_user(self) -> Dict:
+        user_id = str(uuid.uuid4())
         name = f"{random.choice(self.FIRST_NAMES)} {random.choice(self.LAST_NAMES)}"
         age = random.randint(15, 60)
         return {
-            "id": uid,
+            "id": user_id,
             "name": name,
             "age": age,
             "email": f"{name.lower().replace(' ','.')}@exemplo.com"
         }
 
-    def random_order(self, user_id: str = None) -> Dict:
+    def generate_order(self, user_id: str) -> Dict:
         order_id = str(uuid.uuid4())
-        user = user_id or str(uuid.uuid4())
+        product_name = random.choice(self.PRODUCTS)
         quantity = random.randint(1, 5)
-        product = random.choice(self.PRODUCTS)
-        price = round(random.uniform(10.0, 200.0), 2)
-        created = datetime.datetime.utcnow().isoformat() + "Z"
+        unit_price = round(random.uniform(10.0, 200.0), 2)
+        total_price = round(unit_price * quantity, 2)
+        created_at = datetime.datetime.utcnow().isoformat() + "Z"
+
         return {
             "order_id": order_id,
-            "user_id": user,
-            "product": product,
+            "user_id": user_id,
+            "product": product_name,
             "quantity": quantity,
-            "total": round(price * quantity, 2),
-            "created_at": created
+            "unit_price": unit_price,
+            "total_price": total_price,
+            "created_at": created_at
         }
 
-    def users(self, n: int) -> List[Dict]:
-        return [self.random_user() for _ in range(n)]
+    def users(self, amount: int) -> List[Dict]:
+        return [self.generate_user() for _ in range(amount)]
 
-    def orders(self, n: int, user_pool: List[Dict] = None) -> List[Dict]:
-        user_ids = [u["id"] for u in (user_pool or self.users(max(1, n//2)))]
-        return [self.random_order(user_id=random.choice(user_ids)) for _ in range(n)]
+    def orders(self, amount: int, users_list: List[Dict] = None) -> List[Dict]:
+        """
+        Gera uma lista de pedidos sintéticos.
+        - amount: número de pedidos
+        - users_list: lista de usuários existentes (opcional)
+        """
+        if not users_list:
+            users_list = self.users(max(1, amount // 2))
+
+        user_ids = [user["id"] for user in users_list]
+        return [self.generate_order(user_id=random.choice(user_ids)) for _ in range(amount)]
 
 
 # Exemplo de uso rápido
 if __name__ == "__main__":
-    g = DummyDataGenerator()
-    print("3 usuários:", g.users(3))
-    print("5 pedidos:", g.orders(5))
+    generator = DummyDataGenerator()
+    print("Usuários (3):", generator.users(3))
+    print("Pedidos (5):", generator.orders(5))
