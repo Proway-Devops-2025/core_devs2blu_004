@@ -7,3 +7,19 @@ class Joinville(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+
+class Horario(Base):
+    __tablename__ = "horarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Informações básicas
+    titulo = Column(String(255), nullable=False)
+    descricao = Column(String(500))
+    
+    # Data e hora
+    data = Column(Date, nullable=False)
+    hora_inicio = Column(Time, nullable=False)
+    hora_fim = Column(Time)
