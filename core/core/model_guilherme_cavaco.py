@@ -7,3 +7,9 @@ class GuilhermeCavaco(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+numeros = [1, 2, 3, 4]
+quadrados = []
+for n in numeros:
+    quadrados.append(n ** 2)
+print(quadrados)
